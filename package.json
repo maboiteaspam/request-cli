@@ -1,0 +1,24 @@
+{
+  "name": "request-cli",
+  "version": "1.0.0",
+  "description": "cli program from request/requst node module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "request",
+    "cli"
+  ],
+  "bin": {
+    "request": "index",
+    "req": "index"
+  },
+  "author": "maboiteaspam",
+  "license": "WTF",
+  "dependencies": {
+    "commander": "^2.8.0",
+    "npmlog": "^1.2.0",
+    "request": "^2.55.0"
+  }
+}
