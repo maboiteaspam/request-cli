@@ -5,6 +5,7 @@ var urlUtil = require('url');
 var program = require('commander');
 var log = require('npmlog');
 var request = require('request');
+var fs = require('fs-extra');
 
 
 program.version(pkg.version)
@@ -80,6 +81,9 @@ program.version(pkg.version)
 
     var data = null;
     if(options.data){
+      if(options.data.match(/^@/)){
+        options.data = ''+fs.readFileSync(options.data.match(/@(.+)/)[1], "utf-8" );
+      }
       try{
         // in JS we preferably parse JSON : )
         data = JSON.parse(options.data);
