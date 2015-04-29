@@ -108,7 +108,7 @@ program.version(pkg.version)
       }
     }
     if(data){
-      options.form = data;
+      reqOptions.form = data;
     }
 
     log.info('URL ', '%s %s', method, reqOptions.url);
