@@ -78,6 +78,38 @@ program.version(pkg.version)
       };
     }
 
+    var data = null;
+    if(options.data){
+      try{
+        // in JS we preferably parse JSON : )
+        data = JSON.parse(options.data);
+      }catch(ex){
+        // if that fails, it is maybe already url encoded data, in a curl style,
+        // let s try to decode it.
+        try{
+          data = require('querystring').parse(options.data);
+        }catch(ex){
+          throw ex; // something is wrong !!!
+        }
+      }
+    }
+    if(options['data-raw']){
+      try{
+        data = require('querystring').parse(options['data-raw']);
+      }catch(ex){
+        throw ex; // something is wrong !!!
+      }
+    }
+    if(options['data-urlencode']){
+      try{
+        data = require('querystring').parse(options['data-urlencode']);
+      }catch(ex){
+        throw ex; // something is wrong !!!
+      }
+    }
+    if(data){
+      options.form = data;
+    }
 
     log.info('URL ', '%s %s', method, reqOptions.url);
 
@@ -111,7 +143,8 @@ program.version(pkg.version)
         }
       }
     })
-  });
+  })
+  ._name = 'req'; // this is a trick to cover bug in commander : /
 
 // ----- HELP
 

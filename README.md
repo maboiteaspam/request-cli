@@ -18,7 +18,8 @@ If i have not yet published this module to NPM, please use this syntax meanwhile
 # Options
 
 ```sh
-  Usage: undefined <url> [options]
+
+  Usage: req <url> [options]
 
   req url
 
@@ -32,21 +33,23 @@ If i have not yet published this module to NPM, please use this syntax meanwhile
     -I, --resheaders              Display Response headers
     -m, --method <HTTPMethod>     Request HTTP method
     -X, --request <HTTPMethod>    Request HTTP method. (Curl Style)
-    -s, --strictSSL <strict>      Require strict SSL
-    -c, --cookies <cookies>       Set cookie string, such "a=v1&b=v2", don t forget quotes on unix because of the &
+    -k, --insecure                Allow insecure ssl certificates. (Curl Style)
     -u, --useragent <UserAgent>   User agent to inject to your query
     -A, --user-agent <UserAgent>  User agent to inject to your query (Curl Style)
+    -c, --cookies <cookies>       Set cookie string, such "a=v1&b=v2", don t forget quotes on unix because of the &.
     -b, --cookie <name=data>      Pass the data to the HTTP server as a cookie. (Curl Style)
-    -d, --data <data>             Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button. (Curl Style)
+    -d, --data <data>             Sends the specified data in a POST request to the HTTP server, 
+                                  in the same way that a browser does when a user has filled in an HTML form 
+                                  and presses the submit button. (Curl Style)
     -e, --referer <url>           Sends the "Referrer Page" information to the HTTP server. (Curl Style)
-    -H, --header <header>         Sends the "Referrer Page" information to the HTTP server. (Curl Style)
-    --data-raw <data>             This posts data similarly to --data but without the special interpretation of the @ character. (Curl Style)
-    --data-urlencode  <data>      This posts data, similar to the other --data options with the exception that this performs URL-encoding. (Curl Style)
-    -k, --insecure                Allow insecure ssl certificates. (Curl Style)
+    -H, --header <header>         Extra header to include in the request when sending HTTP to a server. (Curl Style)
+    --data-raw <data>             This posts data similarly to --data but without the special interpretation 
+                                  of the @ character. (Curl Style)
+    --data-urlencode  <data>      This posts data, similar to the other --data options with the exception that 
+                                  this performs URL-encoding. (Curl Style)
     -L, --location                Follow redirects. (Curl Style)
     -o, --output <file>           Output to specified file. (Curl Style)
-    -u, --user <user:password>    Output to specified file. (Curl Style)
-
+    -u, --user <user:password>    HTTP Auth. (Curl Style)
 
 ```
 
@@ -54,8 +57,8 @@ If i have not yet published this module to NPM, please use this syntax meanwhile
 # Usage
 
 ```sh
-request http://some.com/curl
-req http://some.com/curl -u 'sme user agent'
+    request http://some.com/curl
+    req http://some.com/curl -u 'some user agent'
 ```
 
 
