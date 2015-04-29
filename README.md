@@ -46,7 +46,7 @@ Options:
 -H, --header <header>         Extra header to include in the request when sending HTTP 
                               to a server. (Curl Style)
 --data-raw <data>             This posts data similarly to --data but without the 
-\                             special interpretation of the @ character. (Curl Style)
+                              special interpretation of the @ character. (Curl Style)
 --data-urlencode  <data>      This posts data, similar to the other --data options 
                               with the exception that this performs URL-encoding. (Curl Style)
 -L, --location                Follow redirects. (Curl Style)
