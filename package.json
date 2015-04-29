@@ -12,8 +12,8 @@
     "cli"
   ],
   "bin": {
-    "request": "index",
-    "req": "index"
+    "request": "index.js",
+    "req": "index.js"
   },
   "author": "maboiteaspam",
   "license": "WTF",
