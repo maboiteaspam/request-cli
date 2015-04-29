@@ -78,6 +78,8 @@ Options:
 ```sh
     request http://some.com/curl
     req http://some.com/curl -u 'some user agent'
+    req http://some.com/curl -X POST -d "{\"some\":\"data\"}"
+    req http://some.com/curl -X POST -d some=data
 ```
 
 

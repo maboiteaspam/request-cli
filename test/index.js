@@ -63,5 +63,24 @@ describe('request-cli', function(){
     exec( forgeReqCli('some -X POST -d "{\\"some\\":\\"data\\"}"') );
   });
 
+  it('should be able to request a POST with url encoded data', function(done_){
+    var app = express();
+    var server = http.createServer(app);
+    var done = function(){
+      server.close();
+      done_();
+    };
+    app.use(require('body-parser').urlencoded({extended:false} ) );
+    app.get('/some', function(){
+      done('wrong HTTP method detected');
+    });
+    app.post('/some', function(res){
+      res.body.some.should.eql('data');
+      done();
+    });
+    server.listen(3005);
+    exec( forgeReqCli('some -X POST -d some=data') );
+  });
+
 });
 
