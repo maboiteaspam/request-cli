@@ -21,8 +21,6 @@ If i have not yet published this module to NPM, please use this syntax meanwhile
 
 Usage: req <url> [options]
 
-req url
-
 Options:
 
 -h, --help                    output usage information
