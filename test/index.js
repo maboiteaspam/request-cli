@@ -6,9 +6,11 @@ var fs = require("fs-extra");
 var express = require("express");
 var exec = require("child_process").exec;
 
+var binPath = path.resolve(__dirname+'/../index.js');
+
 var forgeReqCli = function(url_options, then){
-  var cmd = 'node "'+path.resolve(__dirname+'/../index.js')+'" http://localhost:3005/'+url_options;
-  console.error('\t'+cmd);
+  var cmd = 'node "' + binPath + '" http://localhost:3005/' + url_options;
+  console.error('\t' + cmd);
   return cmd;
 };
 
@@ -121,8 +123,8 @@ describe('request-cli', function(){
     });
     server.listen(3005);
     fs.mkdirsSync(__dirname+'/fixtures' );
-    fs.writeFileSync(__dirname+'/fixtures/somneother', 'somneother=data2&some=data' );
-    exec( forgeReqCli('some -X POST -d "@'+__dirname+'/fixtures/somneother"') );
+    fs.writeFileSync(__dirname+'/fixtures/someother', 'someother=data2&some=data' );
+    exec( forgeReqCli('some -X POST -d "@'+__dirname+'/fixtures/someother"') );
   });
 
 });
