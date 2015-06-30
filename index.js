@@ -6,6 +6,7 @@ var program = require('commander');
 var log = require('npmlog');
 var request = require('request');
 var fs = require('fs-extra');
+var path = require('path');
 
 
 program.version(pkg.version)
@@ -27,9 +28,12 @@ program.version(pkg.version)
   .option('-H, --header <header>', 'Extra header to include in the request when sending HTTP to a server. (Curl Style)')
   .option('--data-raw <data>', 'This posts data similarly to --data but without the special interpretation of the @ character. (Curl Style)')
   .option('--data-urlencode  <data>', 'This posts data, similar to the other --data options with the exception that this performs URL-encoding. (Curl Style)')
+  .option('-T, --upload-file <file>', 'Transfers the specified local file to the  remote  URL with a PUT method. (Curl Style)')
   .option('-L, --location', 'Follow redirects. (Curl Style)')
   .option('-o, --output <file>', 'Output to specified file. (Curl Style)')
   .option('-u, --user <user:password>', 'HTTP Auth. (Curl Style)')
+  .option('--pre-crlf', 'Add a newline/CRLF before the boundary of a multipart/related.')
+  .option('--post-crlf', 'Add a newline/CRLF after the boundary of a multipart/related.')
   .action(function (url, options){
 
     if(options.verbose) log.level = 'verbose';
@@ -55,8 +59,18 @@ program.version(pkg.version)
 
     if(options.useragent){
       reqOptions.headers['User-Agent'] = options.useragent;
-    }else if(options['user-agent']){
-      reqOptions.headers['User-Agent'] = options['user-agent'];
+    }else if(options['userAgent']){
+      reqOptions.headers['User-Agent'] = options['userAgent'];
+    }
+
+    if(options['uploadFile']){
+      if(fs.existsSync(options['uploadFile']) === false ){
+        console.error('file path does not exists\n%s', options['uploadFile']);
+        return;
+      }
+      if(!options.method && !options.request){
+        reqOptions.method = 'PUT';
+      }
     }
 
     if(options.referer){
@@ -97,14 +111,14 @@ program.version(pkg.version)
         }
       }
     }
-    if(options['data-raw']){
+    if(options['dataRaw']){
       try{
         data = require('querystring').parse(options['data-raw']);
       }catch(ex){
         throw ex; // something is wrong !!!
       }
     }
-    if(options['data-urlencode']){
+    if(options['dataUrlencode']){
       try{
         data = require('querystring').parse(options['data-urlencode']);
       }catch(ex){
@@ -115,7 +129,7 @@ program.version(pkg.version)
       reqOptions.form = data;
     }
 
-    log.info('URL ', '%s %s', method, reqOptions.url);
+    log.info('URL ', '%s %s', reqOptions.method, reqOptions.url);
 
     if(options.reqheaders){
       log.info('REQ ', 'Request headers');
@@ -130,9 +144,10 @@ program.version(pkg.version)
         log.info('    ', cookie);
       });
     }
+
     log.info('REQ ', 'sent');
-    request(reqOptions, function (error, response, body) {
-      log.info('RES ', 'received');
+
+    var r = request(reqOptions, function (error, response, body) {
       if(error){
         log.error('RES ', 'Failure');
         log.error(error);
@@ -146,7 +161,12 @@ program.version(pkg.version)
           print(body );
         }
       }
-    })
+    });
+
+    if(options['uploadFile']){
+      fs.createReadStream(options['uploadFile']).pipe(r)
+    }
+
   })
   ._name = 'req'; // this is a trick to cover bug in commander : /
 

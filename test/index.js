@@ -6,7 +6,7 @@ var fs = require("fs-extra");
 var express = require("express");
 var exec = require("child_process").exec;
 
-var binPath = path.resolve(__dirname+'/../index.js');
+var binPath = path.resolve(__dirname + '/../index.js');
 
 var forgeReqCli = function(url_options, then){
   var cmd = 'node "' + binPath + '" http://localhost:3005/' + url_options;
@@ -15,6 +15,14 @@ var forgeReqCli = function(url_options, then){
 };
 
 describe('request-cli', function(){
+
+  before(function(){
+    fs.mkdirsSync(__dirname+'/fixtures' );
+  });
+
+  after(function(){
+    fs.remove(__dirname+'/fixtures' );
+  });
 
   it('should be able to request a GET', function(done_){
     var app = express();
@@ -101,7 +109,6 @@ describe('request-cli', function(){
       done();
     });
     server.listen(3005);
-    fs.mkdirsSync(__dirname+'/fixtures' );
     fs.writeFileSync(__dirname+'/fixtures/some', JSON.stringify({some:"data"}) );
     exec( forgeReqCli('some -X POST -d "@'+__dirname+'/fixtures/some"') );
   });
@@ -122,9 +129,30 @@ describe('request-cli', function(){
       done();
     });
     server.listen(3005);
-    fs.mkdirsSync(__dirname+'/fixtures' );
     fs.writeFileSync(__dirname+'/fixtures/someother', 'someother=data2&some=data' );
     exec( forgeReqCli('some -X POST -d "@'+__dirname+'/fixtures/someother"') );
+  });
+
+  it('should be able to send a PUT request with file as body', function(done_){
+    var app = express();
+    var server = http.createServer(app);
+    var done = function(){
+      server.close();
+      done_();
+    };
+    app.use(require('connect-busboy')());
+    app.put('/some', function(req, res){
+      var body = ''
+      req.on('data', function(chunk) {
+        body += chunk
+      }).on('end', function() {
+        body.should.eql('the content');
+        done();
+      });
+    });
+    server.listen(3005);
+    fs.writeFileSync(path.join(__dirname, 'fixtures', 'putContent'), 'the content');
+    exec( forgeReqCli('some -T '+__dirname + '/fixtures/putContent') );
   });
 
 });
