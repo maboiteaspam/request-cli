@@ -34,7 +34,7 @@ describe('request-cli', function(){
     app.get('/some', function(){
       done();
     });
-    server.listen(3005);
+    server.listen(3005, '127.0.0.1');
     exec( forgeReqCli('some') );
   });
 
@@ -51,7 +51,7 @@ describe('request-cli', function(){
     app.post('/some', function(){
       done();
     });
-    server.listen(3005);
+    server.listen(3005, '127.0.0.1');
     exec( forgeReqCli('some -X POST') );
   });
 
@@ -70,7 +70,7 @@ describe('request-cli', function(){
       res.body.some.should.eql('data')
       done();
     });
-    server.listen(3005);
+    server.listen(3005, '127.0.0.1');
     exec( forgeReqCli('some -X POST -d "{\\"some\\":\\"data\\"}"') );
   });
 
@@ -89,7 +89,7 @@ describe('request-cli', function(){
       res.body.some.should.eql('data');
       done();
     });
-    server.listen(3005);
+    server.listen(3005, '127.0.0.1');
     exec( forgeReqCli('some -X POST -d some=data') );
   });
 
@@ -108,7 +108,7 @@ describe('request-cli', function(){
       res.body.some.should.eql('data');
       done();
     });
-    server.listen(3005);
+    server.listen(3005, '127.0.0.1');
     fs.writeFileSync(__dirname+'/fixtures/some', JSON.stringify({some:"data"}) );
     exec( forgeReqCli('some -X POST -d "@'+__dirname+'/fixtures/some"') );
   });
@@ -128,7 +128,7 @@ describe('request-cli', function(){
       res.body.some.should.eql('data');
       done();
     });
-    server.listen(3005);
+    server.listen(3005, '127.0.0.1');
     fs.writeFileSync(__dirname+'/fixtures/someother', 'someother=data2&some=data' );
     exec( forgeReqCli('some -X POST -d "@'+__dirname+'/fixtures/someother"') );
   });
@@ -140,7 +140,7 @@ describe('request-cli', function(){
       server.close();
       done_();
     };
-    app.use(require('connect-busboy')());
+    app.use(require('body-parser').text());
     app.put('/some', function(req, res){
       var body = ''
       req.on('data', function(chunk) {
@@ -150,7 +150,7 @@ describe('request-cli', function(){
         done();
       });
     });
-    server.listen(3005);
+    server.listen(3005, '127.0.0.1');
     fs.writeFileSync(path.join(__dirname, 'fixtures', 'putContent'), 'the content');
     exec( forgeReqCli('some -T '+__dirname + '/fixtures/putContent') );
   });
