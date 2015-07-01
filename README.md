@@ -76,7 +76,7 @@ Options:
 
 --pre-crlf                    Multipart/* specifics. It will add newline/CRLF before the boundary. See more at request/request.
 
---post-crlf                    Multipart/* specifics. It will add newline/CRLF after the boundary. See more at request/request.
+--post-crlf                   Multipart/* specifics. It will add newline/CRLF after the boundary. See more at request/request.
 ```
 
 
