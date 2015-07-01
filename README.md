@@ -70,8 +70,6 @@ Options:
 
 -u, --user <user:password>    HTTP Auth. (Curl Style)
 
--u, --user <user:password>    HTTP Auth. (Curl Style)
-
 -T, --upload-file <file>      Send a file to a remote HTTP server (Like webdav) using PUT method. (Curl Style)
 
 --pre-crlf                    Multipart/* specifics. It will add newline/CRLF before the boundary. See more at request/request.
