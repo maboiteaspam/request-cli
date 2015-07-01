@@ -70,6 +70,13 @@ Options:
 
 -u, --user <user:password>    HTTP Auth. (Curl Style)
 
+-u, --user <user:password>    HTTP Auth. (Curl Style)
+
+-T, --upload-file <file>      Send a file to a remote HTTP server (Like webdav) using PUT method. (Curl Style)
+
+--pre-crlf                    Multipart/* specifics. It will add newline/CRLF before the boundary. See more at request/request.
+
+--post-crlf                    Multipart/* specifics. It will add newline/CRLF after the boundary. See more at request/request.
 ```
 
 
@@ -80,6 +87,12 @@ Options:
     req http://some.com/curl -u 'some user agent'
     req http://some.com/curl -X POST -d "{\"some\":\"data\"}"
     req http://some.com/curl -X POST -d some=data
+    
+    # if you want/need to do some webdav thing, here you go
+    req http://user:pass@some.com/curl URL_TO_STORE_FILE.EXT -T THE_PATH_TO_STORE.ext
+    req http://user:pass@some.com/curl URL_TO_STORE_FILE.EXT -X DELETE
+    req http://user:pass@some.com/curl URL_TO_FOLDER_TO_CREATE -X MKCOL
+    # use DELETE method to remove a folder too.
 ```
 
 
