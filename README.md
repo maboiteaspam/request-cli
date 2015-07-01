@@ -87,9 +87,9 @@ Options:
     req http://some.com/curl -X POST -d some=data
     
     # if you want/need to do some webdav thing, here you go
-    req http://user:pass@some.com/curl URL_TO_STORE_FILE.EXT -T THE_PATH_TO_STORE.ext
-    req http://user:pass@some.com/curl URL_TO_STORE_FILE.EXT -X DELETE
-    req http://user:pass@some.com/curl URL_TO_FOLDER_TO_CREATE -X MKCOL
+    req http://user:pass@some.com/URL_TO_FILE LOCAL_PATH_TO_FILE.EXT -T THE_PATH_TO_STORE.ext
+    req http://user:pass@some.com/URL_TO_FILE -X DELETE
+    req http://user:pass@some.com/URL_TO_FOLDER_TO_CREATE -X MKCOL
     # use DELETE method to remove a folder too.
 ```
 
