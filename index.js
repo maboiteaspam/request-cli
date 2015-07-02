@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 var pkg = require('./package.json');
 
@@ -6,7 +7,6 @@ var program = require('commander');
 var log = require('npmlog');
 var request = require('request');
 var fs = require('fs-extra');
-var path = require('path');
 
 
 program.version(pkg.version)
