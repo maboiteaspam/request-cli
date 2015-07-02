@@ -40,7 +40,7 @@ program.version(pkg.version)
 
     var print = function(d){
       if(!options.raw){
-        d = JSON.stringify(d,null,2);
+        d = JSON.stringify(d, null, 2);
       }
       console.log( d );
     };
@@ -113,14 +113,14 @@ program.version(pkg.version)
     }
     if(options['dataRaw']){
       try{
-        data = require('querystring').parse(options['data-raw']);
+        data = require('querystring').parse(options['dataRaw']);
       }catch(ex){
         throw ex; // something is wrong !!!
       }
     }
     if(options['dataUrlencode']){
       try{
-        data = require('querystring').parse(options['data-urlencode']);
+        data = require('querystring').parse(options['dataUrlencode']);
       }catch(ex){
         throw ex; // something is wrong !!!
       }
@@ -158,7 +158,7 @@ program.version(pkg.version)
         }
         if(options.body){
           log.info('BODY', ' ');
-          print(body );
+          print(body);
         }
       }
     });
